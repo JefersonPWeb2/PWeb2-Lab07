@@ -13,6 +13,7 @@ __pycache__/
 *.sqlite3
 
 # Environment
+Travello/
 .env
 .vscode/
 .idea/
