@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Modificar Destino Turístico</title>
+</head>
+<body>
+    <h1>Modificar Destino Turístico</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <!-- Campo para el nombre -->
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" value="{{ destino.nombre }}"><br>
+        <!-- Campo para la descripción -->
+        <label for="descripcion">Descripción:</label><br>
+        <textarea id="descripcion" name="descripcion">{{ destino.descripcion }}</textarea><br>
+        <!-- Campo para la imagen -->
+        <label for="imagen">Imagen:</label>
+        <input type="file" id="imagen" name="imagen"><br>
+        <!-- Vista previa de la imagen actual -->
+        {% if destino.imagen %}
+            <img src="{{ destino.imagen.url }}" alt="{{ destino.nombre }}"><br>
+        {% else %}
+            <p>No hay imagen actual.</p><br>
+        {% endif %}
+        <!-- Campo para el precio -->
+        <label for="precio">Precio:</label>
+        <input type="text" id="precio" name="precio" value="{{ destino.precio }}"><br>
+        <!-- Checkbox para oferta especial -->
+        <input type="checkbox" id="oferta" name="oferta" {% if destino.oferta %} checked {% endif %}>
+        <label for="oferta">Oferta especial</label><br>
+        <!-- Botón para enviar el formulario -->
+        <input type="submit" value="Guardar cambios">
+    </form>
+</body>
+</html>
