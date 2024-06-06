@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'static/styles/estilos.css' %}">
+    <title>Listado de Destinos Turísticos</title>
+</head>
+<body>
+    <!-- listar_destinos.html -->
+
+<h1>Listado de Destinos Turísticos</h1>
+<a href="{% url 'agregar_destino' %}">Agregar Destino</a>
+{% if destinos %}
+    <ul>
+        {% for destino in destinos %}
+            <li>
+                <h2>{{ destino.nombre }}</h2>
+                <p>{{ destino.descripcion }}</p>
+                <!-- Mostrar la imagen -->
+                {% if destino.imagen %}
+                    <img src="{{ destino.imagen.url }}" alt="{{ destino.nombre }}" width="200"><br>
+                {% else %}
+                    <p>No hay imagen disponible.</p>
+                {% endif %}
+                <p>Precio: {{ destino.precio }}</p>
+                {% if destino.oferta %}
+                    <p>¡Oferta especial!</p>
+                {% endif %}
+                <!-- Enlace para modificar este destino -->
+                <a href="{% url 'modificar_destino' destino.id %}">Modificar</a>
+                <!-- Enlace para eliminar este destino -->
+                <form action="{% url 'eliminar_destino' destino.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Eliminar">
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No hay destinos turísticos disponibles.</p>
+{% endif %}
+</body>
+</html>
